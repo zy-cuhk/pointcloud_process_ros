@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="pcdfile_path0" value="/home/haigejiujian/Loam_livox_loop/"/>
+
+  <node name="totalpc_pub" pkg="pointcloud_process" type="totalpc_pub" />
+
+  <!-- <arg name="rviz" default="true" />
+  <group if="$(arg rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d /home/k/Desktop/scanning.rviz"/>
+  </group> -->
+
+</launch>

@@ -15,7 +15,11 @@ int main (int argc, char** argv){
   pcl::PointCloud<pcl::PointXYZ>::Ptr total_cloud (new pcl::PointCloud<pcl::PointXYZ>);
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
   
-  string pcdfile_path0 = "/home/k/Desktop/data/Loam_livox_loop_20220908_test2/";
+  // string pcdfile_path0 = "/home/k/Desktop/data/Loam_livox_loop_20220908_test2/";
+
+  std::string pcdfile_path0;
+  nh.param<std::string>("pcdfile_path0",pcdfile_path0,"default_arg1");
+
   string pcdfile_path;
   int totalpcdfile_num=1000;
   for (int i=1; i<totalpcdfile_num; i++){
