@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="pc_pub_1" pkg="pointcloud_process" type="pc_pub" args="/home/k/jfr/1213.pcd 0" />
+</launch>

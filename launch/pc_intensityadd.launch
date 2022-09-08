@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="pc_intensityadd" pkg="pointcloud_process" type="pc_intensityadd"  output="screen"/>
+</launch>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="cloud1" value="/home/zy/yzf_ws/src/fake_scanning/data2021-12-12_19:05:08/0.pcd" />
+  <node name="pc_segment2" pkg="pointcloud_process" type="pc_segment2" 
+  args=" $(arg cloud1)"  
+  output="screen"/>
+</launch>

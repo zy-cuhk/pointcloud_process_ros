@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="pc_pub_1" pkg="pointcloud_process" type="pc_pub" args="/home/k/gazebo_ws/data/2021-10-29_18:09:04/0.pcd 0" />
+  <node name="pc_pub_2" pkg="pointcloud_process" type="pc_pub" args="/home/k/gazebo_ws/data/2021-10-29_18:09:04/1.pcd 1" />
+</launch>

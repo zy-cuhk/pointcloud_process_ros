@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="cloud1" value="/home/k/gazebo_ws/data/2021-10-29_18:09:04/0.pcd" />
+  <arg name="cloud2" value="/home/k/gazebo_ws/data/2021-10-29_18:09:04/1.pcd" />
+  <arg name="cloud3" value="/home/k/gazebo_ws/data/2021-10-29_18:09:04/2.pcd" />
+  <arg name="cloud4" value="/home/k/gazebo_ws/data/2021-10-29_18:09:04/6.pcd" />
+  <arg name="cloud5" value="/home/k/gazebo_ws/data/2021-10-29_18:09:04/4.pcd" />
+
+  <node name="pc_segment1" pkg="pointcloud_process" type="pc_segment1" 
+  args=" $(arg cloud1) $(arg cloud2) $(arg cloud3) $(arg cloud4) $(arg cloud5)"  
+  output="screen"/>
+  
+</launch>
