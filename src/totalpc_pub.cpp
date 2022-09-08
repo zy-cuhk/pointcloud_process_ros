@@ -21,7 +21,7 @@ int main (int argc, char** argv){
   nh.param<std::string>("pcdfile_path0",pcdfile_path0,"default_arg1");
 
   string pcdfile_path;
-  int totalpcdfile_num=1000;
+  int totalpcdfile_num=3000;
   for (int i=1; i<totalpcdfile_num; i++){
     string str_num = to_string(i);
     pcdfile_path = pcdfile_path0 + "aft_mapp_"+str_num+".pcd";
