@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="mergedpc_pub" pkg="pointcloud_process" type="mergedpc_pub" />
+
+  <arg name="rviz" default="true" />
+  <group if="$(arg rviz)">
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d /home/haigejiujian/renov_ws/src/pointcloud_process_ros/config/pc1.rviz"/>
+  </group>
+
+</launch>

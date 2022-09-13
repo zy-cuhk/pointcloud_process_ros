@@ -69,4 +69,7 @@ target_link_libraries(pc_aabb ${catkin_LIBRARIES} ${PCL_LIBS} ${OCTOMAP_LIBRARIE
 add_executable(totalpc_pub src/totalpc_pub.cpp)
 target_link_libraries(totalpc_pub ${catkin_LIBRARIES} ${PCL_LIBS} ${OCTOMAP_LIBRARIES} )
 
+add_executable(mergedpc_pub src/mergedpc_pub.cpp)
+target_link_libraries(mergedpc_pub ${catkin_LIBRARIES} ${PCL_LIBS} ${OCTOMAP_LIBRARIES} )
+
 catkin_install_python(PROGRAMS script/talker  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
