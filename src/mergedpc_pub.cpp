@@ -25,7 +25,7 @@ int main (int argc, char** argv){
   std::string pcdfile_path0;
   nh.param<std::string>("pcdfile_path0",pcdfile_path0,"default_arg1");
 
-  string pcdfile_path = "/home/haigejiujian/renov_ws/src/data/mergedpc.pcd";
+  string pcdfile_path = "/home/haigejiujian/renov_ws/src/data/totalscan.pcd";
   if (pcl::io::loadPCDFile<pcl::PointXYZRGB> (pcdfile_path, *cloud) == -1){
     PCL_INFO ("Couldn't read file test_pcd.pcd \n");
   }
@@ -40,7 +40,7 @@ int main (int argc, char** argv){
             << std::endl;
 
   pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_downsampled (new pcl::PointCloud<pcl::PointXYZRGB>);
-  float leafSize = 0.005;
+  float leafSize = 0.01;
   pcl::VoxelGrid<pcl::PointXYZRGB> voxel;
   voxel.setInputCloud(total_cloud);
   voxel.setLeafSize(leafSize, leafSize, leafSize);
@@ -50,14 +50,14 @@ int main (int argc, char** argv){
   pcl::PassThrough<pcl::PointXYZRGB> pass;    
   pass.setInputCloud (cloud_downsampled);
   pass.setFilterFieldName ("z");
-  pass.setFilterLimits (0.2, 1);
+  pass.setFilterLimits (-1, 0.2);
   pass.filter(*cloud_zfilter_after);
 
 
   // Convert the cloud to ROS message
   sensor_msgs::PointCloud2 output_pointcloud;
   pcl::toROSMsg(*cloud_zfilter_after, output_pointcloud);
-  output_pointcloud.header.frame_id = "map";
+  output_pointcloud.header.frame_id = "aubo_base_link";
   std::cout << "the size is: " << output_pointcloud.data.size() << std::endl;
   ros::Rate loop_rate(10);
   while (ros::ok())
