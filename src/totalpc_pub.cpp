@@ -23,24 +23,26 @@ int main (int argc, char** argv){
   // string pcdfile_path0 = "/home/k/Desktop/data/Loam_livox_loop_20220908_test2/";
 
   std::string pcdfile_path0;
-  nh.param<std::string>("pcdfile_path0",pcdfile_path0,"default_arg1");
+  nh.param<std::string>("/totalpc_pub/pcdfile_path0",pcdfile_path0,pcdfile_path0);
   int pcdfile_endnum;
-  nh.param<int>("pcdfile_endnum",pcdfile_endnum,650);
+  nh.param<int>("/totalpc_pub/pcdfile_endnum",pcdfile_endnum,pcdfile_endnum);
   double leafSize;
-  nh.param<double>("leafSize", leafSize, 0.01);
+  nh.param<double>("/totalpc_pub/leafSize", leafSize, leafSize);
 
 
   // merge the point cloud into total point cloud 
   string pcdfile_path;
   for (int i=1; i<pcdfile_endnum; i++){
     string str_num = to_string(i);
-    pcdfile_path = pcdfile_path0 + "aft_mapp_"+str_num+".pcd";
+    pcdfile_path = pcdfile_path0 + "/Loam_livox_loop/aft_mapp_"+str_num+".pcd";
     if (pcl::io::loadPCDFile<pcl::PointXYZ> (pcdfile_path, *cloud) == -1){
-      PCL_INFO ("Couldn't read file test_pcd.pcd \n");
+      // PCL_INFO ("Couldn't read file test_pcd.pcd \n");
+      cout<<"Couldn't read file test_pcd.pcd "<<endl;
       continue;
     }
     else{
-      ROS_INFO("the pcd file is readed");
+      cout<<"the "<<str_num<<" pcd file is readed"<<endl;
+      // ROS_INFO("the pcd file is readed");
     }
     * total_cloud = * total_cloud + *cloud;
   }
@@ -58,7 +60,7 @@ int main (int argc, char** argv){
   voxel.filter(*cloud_downsampled);
 
   // Save the total point cloud
-  string output_pcdfile_path = pcdfile_path0 + "totalpcd.pcd";
+  string output_pcdfile_path = pcdfile_path0 + "/totalpcd.pcd";
 	pcl::io::savePCDFile(output_pcdfile_path, *cloud_downsampled);
 
   // Convert the cloud to ROS message
