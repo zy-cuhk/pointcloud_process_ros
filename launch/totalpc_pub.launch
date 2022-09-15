@@ -2,8 +2,8 @@
 <launch>
 
   <node pkg="pointcloud_process"  name="totalpc_pub"  type="totalpc_pub" output="screen">
-    <param name="pcdfile_path0" type="string" value="/home/k/Desktop/data/twoviewpoint_test2"/>
-    <param name="pcdfile_endnum" type="int" value="900"/>
+    <param name="pcdfile_path0" type="string" value="/home/k/Desktop/data/twoviewpoint_test3"/>
+    <param name="pcdfile_endnum" type="int" value="400"/>
     <param name="leafSize" type="double" value="0.02"/>
   </node>
 
