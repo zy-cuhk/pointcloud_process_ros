@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <launch>
-  <param name="pcdfile_path0" value="/home/haigejiujian/Loam_livox_loop/"/>
+  <param name="pcdfile_path0" type="string" value="/home/haigejiujian/Loam_livox_loop/"/>
+  <param name="pcdfile_endnum" type="int" value="850"/>
+  <param name="leafSize" type="double" value="0.03"/>
 
-  <node name="totalpc_pub" pkg="pointcloud_process" type="totalpc_pub" />
+  <node name="totalpc_pub" pkg="pointcloud_process" type="totalpc_pub" output="screen" />
 
-  <!-- <arg name="rviz" default="true" />
+  <arg name="rviz" default="true" />
   <group if="$(arg rviz)">
-    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d /home/k/Desktop/scanning.rviz"/>
-  </group> -->
+    <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find pointcloud_process)/config/pc2.rviz"/>
+  </group>
 
 </launch>

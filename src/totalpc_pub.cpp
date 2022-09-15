@@ -1,9 +1,14 @@
 #include <ros/ros.h>
+#include <sensor_msgs/PointCloud2.h>
+
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+#include <pcl/filters/voxel_grid.h>
 #include <pcl_conversions/pcl_conversions.h>
-#include <sensor_msgs/PointCloud2.h>
+#include <pcl/filters/passthrough.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/filters/radius_outlier_removal.h>
 
 using namespace std;
 
@@ -19,10 +24,15 @@ int main (int argc, char** argv){
 
   std::string pcdfile_path0;
   nh.param<std::string>("pcdfile_path0",pcdfile_path0,"default_arg1");
+  int pcdfile_endnum;
+  nh.param<int>("pcdfile_endnum",pcdfile_endnum,650);
+  double leafSize;
+  nh.param<double>("leafSize", leafSize, 0.01);
 
+
+  // merge the point cloud into total point cloud 
   string pcdfile_path;
-  int totalpcdfile_num=650;
-  for (int i=1; i<totalpcdfile_num; i++){
+  for (int i=1; i<pcdfile_endnum; i++){
     string str_num = to_string(i);
     pcdfile_path = pcdfile_path0 + "aft_mapp_"+str_num+".pcd";
     if (pcl::io::loadPCDFile<pcl::PointXYZ> (pcdfile_path, *cloud) == -1){
@@ -35,17 +45,26 @@ int main (int argc, char** argv){
     * total_cloud = * total_cloud + *cloud;
   }
   total_cloud->resize(total_cloud->height * total_cloud->width);
-  std::cout << "Loaded "
-            << total_cloud->size()
-            << " data points from test_pcd.pcd with the following fields: "
-            << std::endl;
+  // std::cout << "Loaded "
+  //           << total_cloud->size()
+  //           << " data points from test_pcd.pcd with the following fields: "
+  //           << std::endl;
+
+  // down sample the total point cloud 
+  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_downsampled (new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::VoxelGrid<pcl::PointXYZ> voxel;
+  voxel.setInputCloud(total_cloud);
+  voxel.setLeafSize(leafSize, leafSize, leafSize);
+  voxel.filter(*cloud_downsampled);
+
+  // Save the total point cloud
   string output_pcdfile_path = pcdfile_path0 + "totalpcd.pcd";
-	pcl::io::savePCDFile(output_pcdfile_path, *total_cloud);
+	pcl::io::savePCDFile(output_pcdfile_path, *cloud_downsampled);
 
   // Convert the cloud to ROS message
   sensor_msgs::PointCloud2 output_pointcloud;
-  pcl::toROSMsg(*total_cloud, output_pointcloud);
-  output_pointcloud.header.frame_id = "map";
+  pcl::toROSMsg(*cloud_downsampled, output_pointcloud);
+  output_pointcloud.header.frame_id = "aubo_base_link";
   std::cout << "the size is: " << output_pointcloud.data.size() << std::endl;
   ros::Rate loop_rate(10);
   while (ros::ok()){
